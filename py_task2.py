@@ -35,6 +35,16 @@ class MinLengthValidator(AbstractBaseValidator):
             raise cls.ValidationError(f'Length must be at least {cls.min_length}')
 
 
+class MaxLengthValidator(AbstractBaseValidator):
+
+    max_length = 6
+
+    @classmethod
+    def validate(cls, value):
+        super().validate(value)
+        if not len(value) <= cls.max_length:
+            raise cls.ValidationError(f'Length must be not bigger than {cls.max_length}')
+
 
 if __name__ == '__main__':
     pass
