@@ -101,6 +101,28 @@ class ValidatorsGroup(ABC):
 
         return errors
 
+    @abstractclassmethod
+    def validate_password_list(cls, password_list):
+
+        result = []
+
+        for password in password_list:
+            validation_dict = {
+                    'password': password,
+                    'valid': True,
+                }
+            
+            if cls.validate(password):
+                if 'errors' not in validation_dict.keys():
+                    validation_dict['errors'] = []
+                validation_dict['errors'].append(cls.validate(password))
+                validation_dict['valid'] = False
+            
+            result.append(validation_dict)
+            
+        return result
+            
+
 
 class PasswordValidatorsGroup(ValidatorsGroup):
     validators = [
@@ -116,4 +138,4 @@ class PasswordValidatorsGroup(ValidatorsGroup):
 
 
 if __name__ == '__main__':
-    print(PasswordValidatorsGroup.validate(''))
+    print(PasswordValidatorsGroup.validate_password_list(['qwe', '123', 'Qw12##']))
