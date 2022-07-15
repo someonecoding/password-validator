@@ -48,6 +48,11 @@ class SpaceBarValidator(AbstractRegExValidator):
     error_message = 'No spacebars allowed.'
 
 
+class UpperCaseValidator(AbstractRegExValidator):
+    re_pattern = r'[A-Z]'
+    error_message = 'Has to contain upper case letter.'
+
+
 class MinLengthValidator(AbstractBaseValidator):
 
     min_length = 4
@@ -88,9 +93,9 @@ class ValidatorsGroup(ABC):
 
 
 class PasswordValidatorsGroup(ValidatorsGroup):
-    validators = [SpaceBarValidator, NumericValidator]
+    validators = [SpaceBarValidator, NumericValidator, UpperCaseValidator]
 
 
 
 if __name__ == '__main__':
-    print(PasswordValidatorsGroup.validate(''))
+    print(PasswordValidatorsGroup.validate('asdasd'))
