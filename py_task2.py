@@ -42,6 +42,12 @@ class NumericValidator(AbstractRegExValidator):
     error_message = 'Value has to contain a number.'
 
 
+class SpaceBarValidator(AbstractRegExValidator):
+    re_pattern = r'\s'
+    has_to_contain = False
+    error_message = 'No spacebars allowed.'
+
+
 class MinLengthValidator(AbstractBaseValidator):
 
     min_length = 4
@@ -82,7 +88,7 @@ class ValidatorsGroup(ABC):
 
 
 class PasswordValidatorsGroup(ValidatorsGroup):
-    validators = [NumericValidator]
+    validators = [SpaceBarValidator, NumericValidator]
 
 
 
