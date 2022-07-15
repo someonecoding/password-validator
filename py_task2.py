@@ -1,4 +1,5 @@
 from abc import ABC, abstractclassmethod
+import re
 
 
 
@@ -24,6 +25,18 @@ class AbstractBaseValidator(ABC):
         cls.validate_type(value)
 
 
+class AbstractRegExValidator(AbstractBaseValidator, ABC):
+    re_pattern = r'.'
+    has_to_contain = True
+    error_message = 'Pattern validation failed!'
+
+    @abstractclassmethod
+    def validate(cls, value):
+        super().validate(value)
+        if not cls.has_to_contain == bool(re.findall(cls.re_pattern, value)):
+            raise cls.ValidationError(cls.error_message)
+
+
 class MinLengthValidator(AbstractBaseValidator):
 
     min_length = 4
@@ -47,8 +60,8 @@ class MaxLengthValidator(AbstractBaseValidator):
 
 
 class ValidatorsGroup(ABC):
-    validators = []
 
+    validators = []
 
     @abstractclassmethod
     def validate(cls, value):
@@ -64,7 +77,7 @@ class ValidatorsGroup(ABC):
 
 
 class PasswordValidatorsGroup(ValidatorsGroup):
-    validators = [MinLengthValidator, MaxLengthValidator]
+    validators = [AbstractRegExValidator]
 
 
 
