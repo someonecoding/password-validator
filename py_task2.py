@@ -53,6 +53,11 @@ class UpperCaseValidator(AbstractRegExValidator):
     error_message = 'Has to contain upper case letter.'
 
 
+class LowerCaseValidator(AbstractRegExValidator):
+    re_pattern = r'[a-z]'
+    error_message = 'Has to contain lower case letter.'
+
+
 class MinLengthValidator(AbstractBaseValidator):
 
     min_length = 4
@@ -93,9 +98,9 @@ class ValidatorsGroup(ABC):
 
 
 class PasswordValidatorsGroup(ValidatorsGroup):
-    validators = [SpaceBarValidator, NumericValidator, UpperCaseValidator]
+    validators = [SpaceBarValidator, NumericValidator, UpperCaseValidator, LowerCaseValidator]
 
 
 
 if __name__ == '__main__':
-    print(PasswordValidatorsGroup.validate('asdasd'))
+    print(PasswordValidatorsGroup.validate('ASDASD'))
