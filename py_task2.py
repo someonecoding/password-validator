@@ -46,5 +46,27 @@ class MaxLengthValidator(AbstractBaseValidator):
             raise cls.ValidationError(f'Length must be not bigger than {cls.max_length}')
 
 
+class ValidatorsGroup(ABC):
+    validators = []
+
+
+    @abstractclassmethod
+    def validate(cls, value):
+        errors = []
+
+        for validator in cls.validators:
+            try:
+                validator.validate(value)
+            except AbstractBaseValidator.ValidationError as e:
+                errors.append(e.message)
+
+        return errors
+
+
+class PasswordValidatorsGroup(ValidatorsGroup):
+    validators = [MinLengthValidator, MaxLengthValidator]
+
+
+
 if __name__ == '__main__':
     pass
