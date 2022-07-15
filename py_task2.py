@@ -37,6 +37,11 @@ class AbstractRegExValidator(AbstractBaseValidator, ABC):
             raise cls.ValidationError(cls.error_message)
 
 
+class NumericValidator(AbstractRegExValidator):
+    re_pattern = r'\d'
+    error_message = 'Value has to contain a number.'
+
+
 class MinLengthValidator(AbstractBaseValidator):
 
     min_length = 4
@@ -77,9 +82,9 @@ class ValidatorsGroup(ABC):
 
 
 class PasswordValidatorsGroup(ValidatorsGroup):
-    validators = [AbstractRegExValidator]
+    validators = [NumericValidator]
 
 
 
 if __name__ == '__main__':
-    pass
+    print(PasswordValidatorsGroup.validate(''))
