@@ -138,4 +138,6 @@ class PasswordValidatorsGroup(ValidatorsGroup):
 
 
 if __name__ == '__main__':
-    print(PasswordValidatorsGroup.validate_password_list(['qwe', '123', 'Qw12##']))
+    password_input = input('Enter passwords: ')
+    validation_data = PasswordValidatorsGroup.validate_password_list(password_input.split(','))
+    print(validation_data)
